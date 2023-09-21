@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Counter Meter</title>
+
+<style>
+  @property --count {
+    syntax: '<number>';
+    initial-value: 0;
+    inherits: true;
+  }
+
+  body {
+    transition: --count 0.5s linear;
+    --count: 0;
+  }
+
+  .setting {
+    display: flex;
+    gap: 4px;
+  }
+
+  .counter {
+    position: relative;
+    width: 96px;
+    height: 120px;
+    background-image: url(numbers.png), linear-gradient(to bottom, transparent, #fff3 33% , transparent);
+    background-size: auto 1000%, 100% 33%;
+    background-position: center calc(calc(-100% / 9) * round(down, calc(var(--count) / var(--base)), 1)), 0 33%;
+    background-repeat: repeat-y, no-repeat;
+    background-color: #444;
+    box-shadow:
+      0px 50px 20px -20px #000a inset,
+      0px -50px 20px -20px #000a inset,
+      -3px 0px 1px -1px #0006 inset,
+      3px 0px 1px -1px #fff3 inset;
+    transition: background-position 0.2s;
+  }
+
+  .counter-list {
+    margin-top: 12px;
+    width: max-content;
+    display: flex;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+</style>
+
+<div class="setting">
+  <input id="count" type="number" value="0" min="0" onchange="updateCount()">
+  <button onclick="updateCount(0)">reset</button>
+  <button onclick="updateCount(+count.value+1)">+1</button>
+  <button onclick="updateCount(+count.value+10)">+10</button>
+  <button onclick="updateCount(+count.value+100)">+100</button>
+  <button onclick="updateCount(+count.value+1000)">+1000</button>
+</div>
+
+<div class="counter-list">
+  <div class="counter" style="--base:1000"></div>
+  <div class="counter" style="--base:100"></div>
+  <div class="counter" style="--base:10"></div>
+  <div class="counter" style="--base:1"></div>
+</div>
+
+<script>
+  function updateCount(value) {
+    if (value != null) count.value = value
+    document.body.style.setProperty('--count', +count.value)
+  }
+  updateCount()
+</script>
