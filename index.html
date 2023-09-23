@@ -10,21 +10,25 @@
     inherits: true;
   }
 
-  body {
-    transition: --count 0.5s linear;
-    --count: 0;
-  }
-
   .setting {
     display: flex;
     gap: 4px;
   }
 
   .counter {
+    margin-top: 12px;
+    width: max-content;
+    display: flex;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: --count 0.5s linear;
+  }
+
+  .digit {
     position: relative;
     width: 96px;
     height: 120px;
-    background-image: url(numbers.png), linear-gradient(to bottom, transparent, #fff3 33% , transparent);
+    background-image: url(numbers.png), linear-gradient(to bottom, transparent, #fff3 33%, transparent);
     background-size: auto 1000%, 100% 33%;
     background-position: center calc(calc(-100% / 9) * round(down, calc(var(--count) / var(--base)), 1)), 0 33%;
     background-repeat: repeat-y, no-repeat;
@@ -36,36 +40,26 @@
       3px 0px 1px -1px #fff3 inset;
     transition: background-position 0.2s;
   }
-
-  .counter-list {
-    margin-top: 12px;
-    width: max-content;
-    display: flex;
-    border-radius: 6px;
-    overflow: hidden;
-  }
 </style>
 
 <div class="setting">
-  <input id="count" type="number" value="0" min="0" onchange="updateCount()">
-  <button onclick="updateCount(0)">reset</button>
-  <button onclick="updateCount(+count.value+1)">+1</button>
-  <button onclick="updateCount(+count.value+10)">+10</button>
-  <button onclick="updateCount(+count.value+100)">+100</button>
-  <button onclick="updateCount(+count.value+1000)">+1000</button>
+  <input id="count" type="number" value="0" min="0" oninput="setCount(count.value)">
+  <button onclick="setCount(0)">reset</button>
+  <button onclick="setCount(+count.value+5)">+5</button>
+  <button onclick="setCount(+count.value+10)">+10</button>
+  <button onclick="setCount(+count.value+50)">+50</button>
+  <button onclick="setCount(+count.value+100)">+100</button>
 </div>
 
-<div class="counter-list">
-  <div class="counter" style="--base:1000"></div>
-  <div class="counter" style="--base:100"></div>
-  <div class="counter" style="--base:10"></div>
-  <div class="counter" style="--base:1"></div>
+<div class="counter" id="counter">
+  <div class="digit" style="--base:1000"></div>
+  <div class="digit" style="--base:100"></div>
+  <div class="digit" style="--base:10"></div>
+  <div class="digit" style="--base:1"></div>
 </div>
 
 <script>
-  function updateCount(value) {
-    if (value != null) count.value = value
-    document.body.style.setProperty('--count', +count.value)
-  }
-  updateCount()
+  const setCount = v => counter.style.setProperty('--count', count.value = v)
+
+  setCount(count.value)
 </script>
