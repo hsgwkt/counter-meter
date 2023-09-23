@@ -30,7 +30,7 @@
     height: 120px;
     background-image: url(numbers.png), linear-gradient(to bottom, transparent, #fff3 33%, transparent);
     background-size: auto 1000%, 100% 33%;
-    background-position: center calc(calc(-100% / 9) * round(down, calc(var(--count) / var(--base)), 1)), 0 33%;
+    background-position: center calc((-100% / 9) * round(down, var(--count) / var(--base), 1)), 0 33%;
     background-repeat: repeat-y, no-repeat;
     background-color: #444;
     box-shadow:
